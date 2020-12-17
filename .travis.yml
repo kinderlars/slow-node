@@ -1,0 +1,15 @@
+language: 
+  node_js
+node_js:
+  - 13
+
+script:
+  - docker --version
+  - docker build -t simple-node .
+  - docker tag simple-node megustacc/simple-node:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+  - docker push megustacc/simple-node
+
+
